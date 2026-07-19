@@ -1,9 +1,9 @@
-from langpoem import Graph, OpenAI, SQLiteMemory
+from langpoem import Graph, Ollama, SQLiteMemory
 
 def build_graph():
     graph = (
         Graph("SupportAgent")
-            .llm(OpenAI())
+            .llm(Ollama())
             .memory(SQLiteMemory())
             .agent("planner")
                 .prompt("Plan the task")

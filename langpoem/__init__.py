@@ -1,2 +1,2 @@
 from .graph import Graph
-from .components import OpenAI, SQLiteMemory
+from .components import Ollama, SQLiteMemory
