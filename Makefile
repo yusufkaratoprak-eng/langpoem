@@ -33,7 +33,7 @@ setup:
 	if [ -f .env ]; then \
 		echo ".env file already exists."; \
 	else \
-		printf 'OLLAMA_MODEL=llama3.2\nOLLAMA_BASE_URL=%s\n' "$(OLLAMA_URL)" > .env; \
+		printf 'OLLAMA_MODEL=llama3.2\nOLLAMA_BASE_URL=%s\n\nAPPINSIGHT_LOCAL=true\nAPPINSIGHT_APP_ID=\nAPPINSIGHT_API_KEY=\n' "$(OLLAMA_URL)" > .env; \
 		echo ".env file created."; \
 		READY=0; \
 	fi; \
