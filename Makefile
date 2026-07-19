@@ -13,28 +13,36 @@ help:
 	@echo "  make clean  - remove the venv and __pycache__ directories"
 
 setup:
-	@echo "[1/3] Creating virtual environment..."
-	@if [ -d $(VENV_DIR) ]; then \
+	@READY=1; \
+	echo "[1/3] Creating virtual environment..."; \
+	if [ -d $(VENV_DIR) ]; then \
 		echo ".venv already exists, skipping creation."; \
 	else \
 		$(PYTHON) -m venv $(VENV_DIR); \
-	fi
-	@echo "[2/3] Checking dependencies..."
-	@if $(VENV_PIP) show $$(cat requirements.txt) >/dev/null 2>&1; then \
+		READY=0; \
+	fi; \
+	echo "[2/3] Checking dependencies..."; \
+	if $(VENV_PIP) show $$(cat requirements.txt) >/dev/null 2>&1; then \
 		echo "All dependencies are already installed."; \
 	else \
 		echo "Installing dependencies..."; \
 		$(VENV_PIP) install -r requirements.txt; \
-	fi
-	@echo "[3/3] Checking .env file..."
-	@if [ ! -f .env ]; then \
+		READY=0; \
+	fi; \
+	echo "[3/3] Checking .env file..."; \
+	if [ -f .env ]; then \
+		echo ".env file already exists."; \
+	else \
 		printf 'OLLAMA_MODEL=llama3.2\nOLLAMA_BASE_URL=%s\n' "$(OLLAMA_URL)" > .env; \
 		echo ".env file created."; \
+		READY=0; \
+	fi; \
+	echo ""; \
+	if [ "$$READY" = "1" ]; then \
+		echo "Everything is already installed. You can run 'make run'."; \
 	else \
-		echo ".env file already exists."; \
+		echo "Setup complete! You can now run 'make run'."; \
 	fi
-	@echo ""
-	@echo "Setup complete! Run 'make run' to start the app."
 
 ollama:
 	@echo "Checking Ollama..."
