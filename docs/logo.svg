@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="440" height="150" viewBox="0 0 440 150">
   <rect x="1" y="1" width="438" height="148" rx="24" fill="#0d1117" stroke="#232833" stroke-width="1"/>
-  <text x="36" y="98" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-weight="800" font-size="68" fill="#f5f6fa">lang</text>
-  <g transform="translate(202,102) skewX(-12)">
+  <text x="36" y="97" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-weight="800" font-size="68" fill="#f5f6fa">lang</text>
+  <g transform="translate(176,97) skewX(-12)">
     <text x="0" y="0" font-family="'Segoe Script', 'Brush Script MT', 'Lucida Handwriting', cursive" font-style="italic" font-size="66" fill="#ff5fa8">poem</text>
   </g>
 </svg>
