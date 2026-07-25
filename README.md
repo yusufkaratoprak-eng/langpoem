@@ -108,6 +108,12 @@ pip install -r requirements.txt
 python app.py
 ```
 
+`run.bat` / `make run` launch `app.py`, which runs the dashboard shown above:
+
+<p align="center">
+  <img src="docs/dashboard-example.png" alt="langpoem dashboard example" width="640" />
+</p>
+
 ## Status
 
 langpoem itself — the fluent builder over LangGraph — is meant to be reused for more than one agent. Right now only `langpoem/agents/appinsight_agent.py` is actually built out; everything else in this README (the builder pattern, the KQL generation, the Ollama-backed filter extraction) is real and working for that one agent, not a finished product. It's intentionally left open for more agents and contributors to build on top of the same pattern.
