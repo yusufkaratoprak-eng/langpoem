@@ -7,10 +7,23 @@
 langpoem is a thin, fluent wrapper around [LangGraph](https://github.com/langchain-ai/langgraph). The graph — nodes, edges, state — is still plain LangGraph underneath; langpoem's only job is to let you *write* a pipeline the way you'd write a short poem: one line per intent, no boilerplate.
 
 ```python
-AppinsightAgent().llm(Ollama()).text(user_message).build().run()
+from langpoem import Ollama
+from langpoem.agents import AppinsightAgent
+
+if __name__ == "__main__":
+    pipeline = (
+        AppinsightAgent()
+        .llm(Ollama())
+        .text(
+            "Hi, could you please check the issue reported under operation ID "
+            "b7e4c1a0-3f5d-4e2b-9a6c-7d8e9f0a1b2c?"
+        )
+        .build()
+        .run()
+    )
 ```
 
-That single chain configures the LLM, hands it the user's message, and runs the whole `extract_filters -> find_error -> open_ticket` graph.
+That single chain configures the LLM, hands it the user's message, and runs the whole `extract_filters -> find_error -> open_ticket` graph. This exact example lives in [`examples/log_agent.py`](examples/log_agent.py) — run it with `python examples/log_agent.py`.
 
 ## How it fits together
 
@@ -44,7 +57,8 @@ flowchart LR
 
 ## Why Ollama?
 
-- **Private** — the prompt may contain operation/track identifiers, so nothing leaves the machine; no API key, no per-token cost.
+- **Cost** — this is the main driver: cloud LLM bills scale with every call, and a lookup pipeline like this one gets called constantly. Running the model locally with Ollama keeps that cost at zero instead of letting it creep up with usage.
+- **Private** — the prompt may contain operation/track identifiers, so nothing leaves the machine; no API key involved either.
 - **Offline-capable** — a support-tooling pipeline should keep working during an incident even with restricted outbound network access.
 - **Swappable** — `langpoem.Ollama` is a plain config object (`model`, `base_url`). Pointing it at a different local model, or replacing it with any object exposing `.invoke()`, doesn't touch pipeline code.
 - **Configurable** — `OLLAMA_MODEL` / `OLLAMA_BASE_URL` in `.env` (default: `llama3.2` at `http://localhost:11434`).
@@ -93,3 +107,7 @@ source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python app.py
 ```
+
+## Status
+
+langpoem itself — the fluent builder over LangGraph — is meant to be reused for more than one agent. Right now only `langpoem/agents/appinsight_agent.py` is actually built out; everything else in this README (the builder pattern, the KQL generation, the Ollama-backed filter extraction) is real and working for that one agent, not a finished product. It's intentionally left open for more agents and contributors to build on top of the same pattern.
