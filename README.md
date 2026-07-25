@@ -25,14 +25,14 @@ flowchart LR
     LG -- "3 open_ticket" --> T([Ticket])
 
     classDef poem fill:#3b3fa1,color:#fff,stroke:#1c1f3d,stroke-width:1px
-    classDef graph fill:#6f42c1,color:#fff,stroke:#3a2360,stroke-width:1px
+    classDef stategraph fill:#6f42c1,color:#fff,stroke:#3a2360,stroke-width:1px
     classDef ollama fill:#ff5fa8,color:#1a0d14,stroke:#c23f80,stroke-width:1px
     classDef appinsight fill:#0d9488,color:#fff,stroke:#0a6f66,stroke-width:1px
     classDef io fill:#1f2430,color:#f5f6fa,stroke:#3a4155,stroke-width:1px
 
     class U,T io
     class LP poem
-    class LG graph
+    class LG stategraph
     class OL ollama
     class AI appinsight
 ```
